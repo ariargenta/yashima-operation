@@ -1,0 +1,39 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: debian-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Build Docker image
+        run: |
+          docker build -t yashima-operation .
+      
+      - name: Run Docker container
+        run: |
+          docker run yashima-operation
+      
+      - name: Run tests
+        run: |
+          docker run yashima-operation ./build/runTests
+      
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ./build/test-results.log
