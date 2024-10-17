@@ -1,0 +1,35 @@
+# Build directories
+/build/
+CmakeFiles/
+CmakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# Compiled binaries
+*.o
+*.a
+*.out
+*.exe
+*.so
+*.dll
+
+#IDE and editor settings
+.vscode/
+!/.vscode/tasks.json
+/*.user
+*.swp
+*.swo
+*.DS_Store
+
+# Logs
+*.log
+
+# Temporary files
+bin/
+lib/
+obj/
+runTests
+
+# Third-party dependencies
+third-party/
