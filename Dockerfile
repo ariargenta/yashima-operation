@@ -9,23 +9,22 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     git \
+    wget \
     libglfw3-dev \
     libglew-dev \
-    libgl1-mesa-dev \
-    libxrandr-dev \
-    libxinerama-dev \
-    libxcursor-dev \
-    libxi-dev && \
-    rm -rf /var/lib/apt/lists/*
+    libglm-dev \
 
 # Set the working directory
-WORKDIR /usr/src/yashima-operation
+WORKDIR /app
 
 # Copy the files to the project container
 COPY . .
 
 # Build the project
-RUN chmod +x build.sh && ./scripts/build.sh
+RUN mkdir build && cd build && cmake .. && make
+
+# Execute unit tests
+RUN cd build && ctest --output-on-failure
 
 # Set the entry point to run the binary
 CMD ["./build/yashima-operation"]
