@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <spdlog/spdlog.h>
 #include <iostream>
 
 
@@ -60,6 +61,9 @@ int main( int argc, char* argv[] ) {
         glfwTerminate();
         return -1;
     }
+
+    // Enable logging
+    spdlog::info("Yashima Operation started.");
 
     // Main loop
     while( !glfwWindowShouldClose( window ) ) {

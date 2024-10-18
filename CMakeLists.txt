@@ -47,3 +47,7 @@ target_link_libraries(runTests PRIVATE gtest gtest_main glfw OpenGL::GL GLEW)
 
 # Add tests
 add_test(NAME runTests COMMAND runTests)
+
+# Log management
+add_subdirectory(${CMAKE_SOURCE_DIR}/third-party/spdlog)
+target_link_libraries(yashima-operation PRIVATE spdlog::spdlog)
