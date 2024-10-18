@@ -1,28 +1,19 @@
 #!/bin/bash
 
-# Define route to root directory
-PROJECT_ROOT="$(dirname "$(dirname "$(realpath "$0")")")"
+# Build directory creation
+mkdir -p build && cd build
 
-# Clean the build directory
-if [ -d "$PROJECT_ROOT/build" ]; then
-    echo "Cleaning the build directory..."
-    rm -rf "$PROJECT_ROOT/build"
-fi
+# Install dependencies using conan
+conan install .. --build=missing
 
-# Create the build directory
-mkdir "$PROJECT_ROOT/build"
+# Configure the project with CMake
+cmake ..
+make
 
-# Configurate the project with CMake
-echo "Configuring the project with CMake..."
-cmake -S "$PROJECT_ROOT" -B "$PROJECT_ROOT/build" -DCMAKE_BUILD_TYPE=Debug
-
-# Compile the project with CMake
-cd "$PROJECT_ROOT/build"
-
-if [ $? -eq 0 ]; then
-    echo "Compiling the project with CMake..."
-    make
-else
-    echo "Error configuring the project with CMake."
+# Verify the compilation status
+if [ $? -ne 0 ]; then
+    echo "Error during build process."
     exit 1
+else
+    echo "Build process completed successfully."
 fi
