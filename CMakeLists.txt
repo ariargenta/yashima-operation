@@ -20,7 +20,7 @@ add_executable(yashima-operation ${SRC_FILES})
 # OpenGL package
 find_package(OpenGL REQUIRED)
 
-# Include directories for GLFW and GLEW
+# Include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Find GLFW package
@@ -50,4 +50,7 @@ add_test(NAME runTests COMMAND runTests)
 
 # Log management
 add_subdirectory(${CMAKE_SOURCE_DIR}/third-party/spdlog)
+target_include_directories(runTests PRIVATE ${CMAKE_SOURCE_DIR}/third-party/spdlog/include)
+target_include_directories(yashima-operation PRIVATE ${CMAKE_SOURCE_DIR}/third-party/spdlog/include)
 target_link_libraries(yashima-operation PRIVATE spdlog::spdlog)
+target_link_libraries(runTests PRIVATE spdlog::spdlog)

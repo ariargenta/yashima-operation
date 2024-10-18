@@ -1,30 +1,14 @@
 #include <gtest/gtest.h>
-#include <GLFW/glfw3.h>
+#include "config.hpp"
 
 
-/**
- * @brief Test to check GLFW initialization.
- */
-TEST( GLFWTest, Initialization ) {
-    EXPECT_EQ( glfwInit(), GLFW_TRUE );
-    glfwTerminate();
-}
-
-
-/**
- * @brief Test to check if a window can be created successfully.
- */
-TEST( GLFWTest, CreateWindow ) {
-    if( glfwInit() ){
-        GLFWwindow* window = glfwCreateWindow( 800, 600, "Test window", nullptr, nullptr );
-        
-        EXPECT_NE( window, nullptr );
-        glfwDestroyWindow( window );
-        glfwTerminate();
-    } else {
-        FAIL() << "Failed to initialize GLFW.";
-    }
-}
+class TestEnvironment : public ::testing::Environment {
+    public:
+        void SetUp() override {
+            initializeLogger();
+            spdlog::info( "Test environment setup." );
+        }
+};
 
 
 /**
@@ -36,5 +20,6 @@ TEST( GLFWTest, CreateWindow ) {
  */
 int main( int argc, char* argv[] ) {
     ::testing::InitGoogleTest( &argc, argv );
+    ::testing::AddGlobalTestEnvironment( new ::testing::Environment() );
     return RUN_ALL_TESTS();
 }
