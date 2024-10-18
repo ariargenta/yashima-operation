@@ -40,3 +40,12 @@ inline void initializeLogger() {
     spdlog::set_level( spdlog::level::debug );
     spdlog::flush_on( spdlog::level::info );
 }
+
+
+inline void logFunctionEntry( const std::string& function_name ) {
+    spdlog::info("Entering function: {}", function_name );
+}
+
+inline void logFunctionExit( const std::string& function_name ) {
+    spdlog::info("Exiting function: {}", function_name );
+}

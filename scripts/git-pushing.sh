@@ -1,31 +1,30 @@
 #!/bin/bash
 
-echo "Pushing to git..."
+# Variables
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
 
-# Add all files to git
-git add .
+# Prompt for commit message
+read -p "Enter commit message: " COMMIT_MESSAGE
 
-# Request commit message
-echo "Please, enter the commit message:"
-read commit_message
-
-# Commit all files
-git commit -m "$commit_message"
-
-# Get the current branch
-current_branch=$(git branch --show-current)
-
-# Push to the current branch
-if [ -z "$current_branch" ]; then
-    echo "Error: Could not get the current branch."
+# Verify if a commit message was provided
+if [ -z "$COMMIT_MESSAGE" ]; then
+    echo "Error: Commit message is required."
     exit 1
 fi
 
-git push -u origin "$current_branch"
+# Stage all changes
+git add .
 
-if [ $? -eq 0 ]; then
-    echo "Pushed to git successfully in the branch: $current_branch"
-else
-    echo "Error: Could not push to git."
+# Commit changes
+git commit -m "${COMMIT_MESSAGE}"
+
+# Push changes to the current branch
+git push origin "$BRANCH_NAME"
+
+# Check if the push was successful
+if [ $? -ne 0 ]; then
+    echo "Error while pushing to branch: ${BRANCH_NAME}"
     exit 1
+else
+    echo "Changes pushed successfully to branch: ${BRANCH_NAME}"
 fi

@@ -12,10 +12,14 @@
  * @return void
  */
 void initializeOpenGL() {
+    logFunctionEntry( "initializeOpenGL" );
+
     if( !glfwInit() ) {
         std::cerr << "Failed to initialize GLFW." << std::endl;
         return;
     }
+
+    spdlog::info( "GLFW initialized successfully." );
 
     // Window configuration
     glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
@@ -25,19 +29,25 @@ void initializeOpenGL() {
     GLFWwindow* window = glfwCreateWindow( DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, "Yashima Operation", nullptr, nullptr );
 
     if( !window ) {
-        std::cerr << "Failed to create GLFW window." << std::endl;
+        spdlog::error( "Failed to create GLFW window." );
         glfwTerminate();
         return;
     }
+
+    spdlog::info( "GLFW window created successfully." );
 
     glfwMakeContextCurrent( window );
 
     glewExperimental = GL_TRUE;
 
     if( glewInit() != GLEW_OK ) {
-        std::cerr << "Failed to initialize GLEW." << std::endl;
+        spdlog::error( "Failed to initialize GLEW." );
         return;
     }
+
+    spdlog::info( "GLEW initialized successfully." );
+
+    logFunctionExit( "initializeOpenGL" );
 }
 
 
