@@ -12,7 +12,7 @@ include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
 # Build type
-if(NOT CMAKE BUILD_TYPE)
+if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 

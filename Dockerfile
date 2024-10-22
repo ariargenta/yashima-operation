@@ -25,7 +25,13 @@ WORKDIR /app
 COPY . .
 
 # Dev build & testing execution
-RUN mkdir build && cd build && cmake .. -DBUILD_TESTS=${BUILD_TESTS} && make
+RUN . /opt/venv/bin/activate && conan --version \
+    conan install . --build=missing && \
+    mkdir build && \
+    cd build \
+    && cmake .. -DBUILD_TESTS=${BUILD_TESTS} && \
+    make
+
 RUN if [ "${BUILD_TESTS}" = "ON" ]; then ctest; fi
 
 # STEP 3: Staging environment
