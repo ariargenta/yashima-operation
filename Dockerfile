@@ -11,8 +11,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libglfw3-dev \
     libglew-dev \
     libglm-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    python3-venv && \
+    python3 -m venv /opt/venv && \
+    . /opt/venv/bin/activate && \
+    pip install conan && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # STEP 2: Development environment
 FROM base AS development
