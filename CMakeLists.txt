@@ -11,6 +11,13 @@ include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 # Source files
 file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
+# Build type
+if(NOT CMAKE BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
 # Executable target
 add_executable(yashima-operation ${SRC_FILES})
 
