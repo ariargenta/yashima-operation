@@ -1,5 +1,5 @@
 # STEP 1: Base image
-FROM debian:stable-slim
+FROM debian:stable-slim AS base
 LABEL maintainer="55609849+ariargenta@users.noreply.github.com"
 
 # Install basic dependencies
