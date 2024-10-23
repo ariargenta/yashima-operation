@@ -25,6 +25,12 @@ class YashimaOperationConan(ConanFile):
     def imports(self):
         self.folders.source = "."
         self.folders.build = "build"
+        
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
     
     def build(self):
         cmake = CMake(self)
@@ -32,6 +38,10 @@ class YashimaOperationConan(ConanFile):
         print(f"Build directory: {cmake.build_folder}")
         print(f"Binary directory: {cmake.binary_folder}")
         cmake.build()
+    
+    def package(self):
+        cmake = CMake(self)
+        cmake.install()
     
     def package_info(self):
         self.cpp_info.libs = ["yashima-operation"]
