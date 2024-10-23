@@ -45,9 +45,7 @@ RUN python3 -m venv /opt/venv
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN pip install --upgrade pip
-
-RUN pip install conan
+RUN pip install --upgrade pip && pip install conan
 
 RUN conan profile detect
 
@@ -55,10 +53,13 @@ WORKDIR /app
 
 COPY . .
 
-# Ensure build and logs directories are created and have correct permissions
-RUN rm -rf /app/logs /app/build && mkdir -p /app/logs /app/build && \
+RUN rm -rf /app/logs /app/build && \
+    mkdir -p /app/logs /app/build && \
+    chmod -R 777 /app/logs /app/build && \
     chown -R root:root /app && chmod -R 777 /app && \
     chown -R root:root /app/logs /app/build && chmod -R 777 /app/logs /app/build
+
+RUN ls -ld /app/logs /app/build && ls -l /app/logs /app/build
 
 RUN conan install . --build=missing -c tools.system.package_manager:mode=install > /app/logs/conan_install.log 2>&1 && \
 cat /app/logs/conan_install.log && \
