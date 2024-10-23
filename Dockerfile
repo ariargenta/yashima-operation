@@ -93,6 +93,10 @@ RUN echo "Testing write permissions to /app/build" && \
 RUN echo "Running CMake configuration" && \
     mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug && \
     echo "Listing contents of /app/build" && \
-    ls -alh /app/build
+    ls -alh /app/build && \
+    echo "Listing contents of /app/build/CMakeFiles" && \
+    ls -alh /app/build/CMakeFiles && \
+    echo "Printing CMakeOutput.log" && \
+    cat /app/build/CMakeFiles/CMakeOutput.log
 
 CMD cd build && make
