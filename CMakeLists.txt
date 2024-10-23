@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.25)
 
 project(yashima-operation VERSION 1.0.0 LANGUAGES CXX)
 
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan_toolchain.cmake")
+if(NOT EXISTS "${CMAKE_SOURCE_DIR}/conan_toolchain.cmake")
     message(FATAL_ERROR "conan_toolchain.cmake not found!")
 endif()
 
-include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+include(${CMAKE_SOURCE_DIR}/conan_toolchain.cmake)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

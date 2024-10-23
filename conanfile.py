@@ -22,10 +22,7 @@ class YashimaOperationConan(ConanFile):
     generators = "CMakeDeps", "CMakeToolchain"
     
     def generate(self):
-        tc = CMakeToolchain(self)
-        tc.generate()
-        deps = CMakeDeps(self)
-        deps.generate()
+        pass
     
     def build(self):
         cmake = CMake(self)
