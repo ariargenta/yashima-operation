@@ -2,9 +2,13 @@
 
 SCRIPTS_DIR="${PWD}/scripts"
 
-echo "Cleaning previous build artifats..."
-
-${SCRIPTS_DIR}/clean.sh
+if [ ! -d "build" ] && [ ! -d "logs" ]; then
+    echo "No build artifacts found. Nothing to clean."
+    exit 0
+else
+    echo "Cleaning previous build artifacts..."
+    ${SCRIPTS_DIR}/clean.sh || { echo "Error occurred while cleaning build artifacts."; exit 1; }
+fi
 
 echo "Select build type:"
 echo "D: Debug"
@@ -21,31 +25,20 @@ case "$CHOICE" in
     *) echo "Invalid choice. Please select D, R, or I."; exit 1;;
 esac
 
-if [ -d "build" ]; then
-    echo "'build' directory  already exists."
-else
-    mkdir -p build
-    echo "'build' directory created."
+if [ ! -d "build" ] || [ ! -d "logs" ]; then
+    mkdir -p build logs
+    echo "'build' and 'logs' directories created."
 fi
 
 cd build
 
-conan install .. --build=missing
-
-if [ -d "../logs" ]; then
-    echo "'logs' directory already exists."
-else
-    mkdir -p ../logs
-    echo "'logs' directory created."
-fi
-
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .. || { echo "Error: CMake configuration failed"; exit 1; }
 
 make 2>&1 | tee ../logs/build.log
 
 if [ $? -ne 0 ]; then
-    echo "Error during compilation process. Please review the \"${PWD}/logs/build.log\" file for more details."
+    echo "Error occurred during build. Please check \"${$PWD}/logs/build.log\" for more details."
     exit 1
 else
-    echo "Successfully binary compilation in ${BUILD_TYPE} mode."
+    echo "Successfully compiled binaries in ${BUILD_TYPE} mode."
 fi

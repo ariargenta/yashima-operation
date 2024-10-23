@@ -1,4 +1,4 @@
-# STEP 1: Base image
+# Development stage
 FROM debian:stable-slim AS base
 LABEL maintainer="55609849+ariargenta@users.noreply.github.com"
 
@@ -8,49 +8,70 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     git \
     wget \
+    pkg-config \
+    libx11-dev \
+    libx11-xcb-dev \
+    libfontenc-dev \
+    libice-dev \
+    libsm-dev \
+    libxaw7-dev \
+    libxmu-dev \
+    libxpm-dev \
+    libxt-dev \
+    libxtst-dev \
+    libxfixes-dev \
+    libxi-dev \
+    libxinerama-dev \
+    libxrandr-dev \
+    libxrender-dev \
+    libxcomposite-dev \
+    libxcursor-dev \
+    libxdamage-dev \
+    libxext-dev \
+    libxss-dev \
+    uuid-dev \
     libglfw3-dev \
     libglew-dev \
     libglm-dev \
+    python3-full \
     python3-venv && \
-    python3 -m venv /opt/venv && \
-    . /opt/venv/bin/activate && \
-    pip install conan && \
+    python3 -m venv --help && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# STEP 2: Development environment
-FROM base AS development
-ARG BUILD_TESTS=on
+# Virtual environment
+RUN python3 -m venv /opt/venv
+
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+RUN pip install --upgrade pip
+
+RUN pip install conan
+
+RUN conan profile detect
+
 WORKDIR /app
+
 COPY . .
 
-# Dev build & testing execution
-RUN . /opt/venv/bin/activate && conan --version \
-    conan install . --build=missing && \
-    mkdir build && \
-    cd build \
-    && cmake .. -DBUILD_TESTS=${BUILD_TESTS} && \
-    make
+# Ensure build and logs directories are created and have correct permissions
+RUN rm -rf /app/logs /app/build && mkdir -p /app/logs /app/build && \
+    chown -R root:root /app && chmod -R 777 /app && \
+    chown -R root:root /app/logs /app/build && chmod -R 777 /app/logs /app/build
 
-RUN if [ "${BUILD_TESTS}" = "ON" ]; then ctest; fi
+RUN conan install . --build=missing -c tools.system.package_manager:mode=install > /app/logs/conan_install.log 2>&1 && \
+cat /app/logs/conan_install.log && \
+ls -alh /app && \
+ls -alh /app/build && \
+test -f /app/build/conan_paths.cmake || (echo "conan_paths.cmake not found" && exit 1)
 
-# STEP 3: Staging environment
-FROM base AS staging
-ARG BUILD_MODE=Release
-ENV STAGING=true
-WORKDIR /app
-COPY . .
+RUN find / -name "conan_paths.cmake"
 
-# Release build
-RUN mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${BUILD_MODE} && make
+RUN cat /app/build/conan_paths.cmake
 
-# Diagnosis tools
-RUN apt-get update && apt-get install -y gdb valgrind && apt-get clean
+RUN cat /app/logs/conan_install.log
 
-# STEP 4: Production environment
-FROM base AS production
-WORKDIR /app
-COPY --from=staging /app/build /app/build
+RUN touch /app/build/testfile || (echo "Cannot write to /app/build" && exit 1)
 
-# Entry point to run the binary
-CMD ["./build/yashima-operation"]
+CMD cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug && make

@@ -5,9 +5,6 @@ project(yashima-operation VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Conan setup
-include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
-
 # Source files
 file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
@@ -17,6 +14,23 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
+# Conan setup
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}")
+message(STATUS "CMake binary dir: ${CMAKE_BINARY_DIR}")
+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+
+if(NOT EXISTS ${CMAKE_BINARY_DIR}/conan_paths.cmake)
+    message(FATAL_ERROR "Conan paths file not found")
+endif()
+
+# Source files
+file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+
+# Build type
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 # Executable target
 add_executable(yashima-operation ${SRC_FILES})

@@ -13,12 +13,12 @@ class YashimaOperationConan( ConanFile ):
     options = { "shared": [ True, False ] }
     default_options = { "shared": False }
     requires = [
-        "glew/2.1.0"
+        "glew/2.1.0",
         "spdlog/1.14.1",
         "glfw/3.4",
-        "gtest/1.15.2"
+        "gtest/1.15.0"
     ]
-    generators = "CMakeDeps", "CMakeToolchain", "CMakeFindPackage"
+    generators = "CMakeDeps", "CMakeToolchain"
     
     
     def imports( self ):
@@ -28,6 +28,8 @@ class YashimaOperationConan( ConanFile ):
     def build( self ):
         cmake = CMake( self )
         cmake.configure()
+        print(f"Build directory: {cmake.build_folder}")
+        print(f"Binary directory: {cmake.binary_folder}")
         cmake.build()
     
     def package_info( self ):

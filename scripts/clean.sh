@@ -1,38 +1,18 @@
 #!/bin/bash
 
+BUILD_DIR="${PWD}/build"
+LOGS_DIR="${PWD}/logs"
+
 echo "Cleaning up..."
 
-# Directory existence verification
-if [ -d "build" ]; then
-    echo "Removing build directory..."
-    rm -rf build
-else
-    echo "Build directory does not exist."
+if [ -d "${BUILD_DIR}" ]; then
+    echo "Removing 'build' directory..."
+    rm -rf ${BUILD_DIR}
 fi
 
-if [ -d "bin" ]; then
-    echo "Removing binary files..."
-    rm -rf bin/*
-else
-    echo "Binary files not founded."
+if [ -d "${LOGS_DIR}" ]; then
+    echo "Removing 'logs' directory..."
+    rm -rf ${LOGS_DIR}
 fi
 
-if [ -d "bin" ]; then
-    echo "Removing binary files..."
-    rm -rf bin/*
-else
-    echo "Binary files not found."
-fi
-
-if [ -d "logs" ]; then
-    echo "Removing logs directory..."
-    rm -rf logs
-else
-    echo "Logs directory does not exist."
-fi
-
-# Log removing
-echo "Removing log files..."
-find . -name "*.log" -type f -exec rm -f {} +
-
-echo "Cleaning process finished."
+echo "Cleanup completed."
