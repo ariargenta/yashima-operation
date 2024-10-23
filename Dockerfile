@@ -90,13 +90,34 @@ RUN echo "Testing write permissions to /app/build" && \
     touch /app/build/testfile || (echo "Cannot write to /app/build" && exit 1)
 
 # Debugging: Verify CMake configuration
-RUN echo "Running CMake configuration" && \
-    mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug && \
+RUN echo "Listing contents of /app/conan_toolchain.cmake" && \
+    ls -alh /app/conan_toolchain.cmake && \
+    echo "Running CMake configuration" && \
+    mkdir -p build && cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Debug || echo "CMake configuration failed!" && \
     echo "Listing contents of /app/build" && \
     ls -alh /app/build && \
     echo "Listing contents of /app/build/CMakeFiles" && \
     ls -alh /app/build/CMakeFiles && \
     echo "Printing CMakeOutput.log" && \
     cat /app/build/CMakeFiles/CMakeOutput.log
+
+# Verify if Makefile is generated
+RUN echo "Verifying if Makefile is generated" && \
+    if [ -f /app/build/Makefile ]; then \
+        echo "Makefile found"; \
+        echo "Printing Makefile" && \
+        cat /app/build/Makefile; \
+    else \
+        echo "Makefile not found"; \
+    fi
+
+# Print CMakeLists.txt for verification
+RUN echo "Printing CMakeLists.txt" && \
+    cat /app/CMakeLists.txt
+
+# Print CMakeError.log for additional debugging
+RUN echo "Printing CMakeError.log" && \
+    cat /app/build/CMakeFiles/CMakeError.log || echo "CMakeError.log not found"
 
 CMD cd build && make
