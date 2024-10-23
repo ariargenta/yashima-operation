@@ -14,7 +14,7 @@ if [ "$(docker images -q $IMAGE_NAME)" ]; then
     echo "Deleting pre-existing Docker image '$IMAGE_NAME'..."
     docker rmi $IMAGE_NAME
 
-    if [ $? -ne 0]; then
+    if [ $? -ne 0 ]; then
         echo "Error occurred while deleting pre-existing Docker image."
         exit 1
     fi

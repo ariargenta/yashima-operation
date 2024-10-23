@@ -1,28 +1,15 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.30)
 
 project(yashima-operation VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Source files
-file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
-
-# Build type
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug)
-endif()
-
-message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
-
 # Conan setup
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}")
-message(STATUS "CMake binary dir: ${CMAKE_BINARY_DIR}")
-include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
-
-if(NOT EXISTS ${CMAKE_BINARY_DIR}/conan_paths.cmake)
-    message(FATAL_ERROR "Conan paths file not found")
-endif()
+find_package(glew REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(GTest REQUIRED)
 
 # Source files
 file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
@@ -32,17 +19,11 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-# Executable target
+# Ejecutable target
 add_executable(yashima-operation ${SRC_FILES})
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
-
-# Link required libraries using Conan
-find_package(OpenGL REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(spdlog REQUIRED)
-find_package(GTest REQUIRED)
 
 # Link libraries to executable
 target_link_libraries(yashima-operation PRIVATE glfw OpenGL::GL GLEW spdlog::spdlog)
