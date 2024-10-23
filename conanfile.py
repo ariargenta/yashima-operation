@@ -1,41 +1,41 @@
 from conan import ConanFile
-from conan.tools.cmake import CMake
+from conan.tools.cmake import CMake, CMakeToolchain
 
-class YashimaOperationConan( ConanFile ):
+class YashimaOperationConan(ConanFile):
     name = "yashima-operation"
     version = "1.0.0"
     license = "MIT"
     author = "Aria Silva <55609849+ariargenta@users.noreply.github.com>"
     url = "https://github.com/ariargenta/yashima-operation"
     description = "Proof of concept for the operation of the Yashima Engine"
-    topics = ( "render-engine", "c++", "game-engine" )
+    topics = ("render-engine", "c++", "game-engine")
     settings = "os", "compiler", "build_type", "arch"
-    options = { "shared": [ True, False ] }
-    default_options = { "shared": False }
+    options = {"shared": [True, False]}
+    default_options = {"shared": False}
     generators = "CMakeDeps", "CMakeToolchain"
     requires = [
         "glew/2.1.0",
         "spdlog/1.14.1",
         "glfw/3.4",
-        "gtest/1.15.0"
+        "gtest/1.15.0",
+        "opengl/system"
     ]
     
     
-    def imports( self ):
+    def imports(self):
         self.folders.source = "."
         self.folders.build = "build"
         
-    def generate( self ):
-        cmake = CMake( self )
-        cmake.configure()
-        cmake.build()
+    def generate(self):
+        deps = CMakeDeps(self)
+        deps.generate()
     
-    def build( self ):
-        cmake = CMake( self )
+    def build(self):
+        cmake = CMake(self)
         cmake.configure()
         print(f"Build directory: {cmake.build_folder}")
         print(f"Binary directory: {cmake.binary_folder}")
         cmake.build()
     
-    def package_info( self ):
-        self.cpp_info.libs = [ "yashima-operation" ]
+    def package_info(self):
+        self.cpp_info.libs = ["yashima-operation"]

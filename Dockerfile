@@ -40,48 +40,55 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # Virtual environment
-RUN python3 -m venv /opt/venv
+RUN set -x && python3 -m venv /opt/venv
 
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN pip install --upgrade pip
+RUN set -x && pip install --upgrade pip
 
-RUN pip install conan
+RUN set -x && pip install conan
 
-RUN conan profile detect
+RUN set -x && conan profile detect
 
 WORKDIR /app
 
 COPY . .
 
-RUN rm -rf /app/logs /app/build && mkdir -p /app/logs /app/build && \
+# Ensure build and logs directories are created and have correct permissions
+RUN set -x && \
+    echo "Creating and setting permissions for /app/logs and /app/build" && \
+    rm -rf /app/logs /app/build && mkdir -p /app/logs /app/build && \
+    ls -ld /app/logs /app/build && \
     chown -R root:root /app && chmod -R 777 /app && \
-    chown -R root:root /app/logs /app/build && chmod -R 777 /app/logs /app/build
+    chown -R root:root /app/logs /app/build && chmod -R 777 /app/logs /app/build && \
+    ls -ld /app/logs /app/build && ls -l /app/logs /app/build
 
-# Debugging
-RUN ls -ld /app/logs /app/build && ls -l /app/logs /app/build
+# Debugging: Print ownership and permissions
+RUN echo "Printing ownership and permissions for /app/logs and /app/build" && \
+    ls -ld /app/logs /app/build && ls -l /app/logs /app/build
 
-RUN conan install . --build=missing -c tools.system.package_manager:mode=install > /app/logs/conan_install.log 2>&1
-
-# Print the last 100 lines of the Conan install log
-RUN tail -n 100 /app/logs/conan_install.log
-
-# Check if conan_paths.cmake exists
-RUN ls -alh /app && ls -alh /app/build && test -f /app/build/conan_paths.cmake || (echo "conan_paths.cmake not found" && exit 1)
+# Redirect Conan install log to a file and print it
+RUN set -x && \
+    echo "Running conan install" && \
+    conan install . --build=missing -c tools.system.package_manager:mode=install
 
 # Find conan_paths.cmake
-RUN find / -name "conan_paths.cmake"
+RUN echo "Finding conan_paths.cmake" && \
+    find / -name "conan_paths.cmake"
 
 # Print the contents of conan_paths.cmake
-RUN cat /app/build/conan_paths.cmake
-
-# Print the entire Conan install log
-RUN cat /app/logs/conan_install.log
+RUN echo "Printing conan_paths.cmake" && \
+    cat /app/build/conan_paths.cmake || echo "conan_paths.cmake not found"
 
 # Test write permissions to /app/build
-RUN touch /app/build/testfile || (echo "Cannot write to /app/build" && exit 1)
+RUN echo "Testing write permissions to /app/build" && \
+    touch /app/build/testfile || (echo "Cannot write to /app/build" && exit 1)
 
-CMD cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug && make
+# Debugging: Verify CMake configuration
+RUN echo "Running CMake configuration" && \
+    mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug && \
+    echo "Listing contents of /app/build" && \
+    ls -alh /app/build
 
-RUN [ -d "/app/build" ] || mkdir /app/build
+CMD cd build && make

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.25)
 
 project(yashima-operation VERSION 1.0.0 LANGUAGES CXX)
 
@@ -10,6 +10,7 @@ find_package(glew REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(GTest REQUIRED)
+find_package(OpenGL REQUIRED)
 
 # Source files
 file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)

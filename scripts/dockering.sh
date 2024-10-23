@@ -6,8 +6,6 @@ CONTAINER_NAME="yashima-operation-container"
 if ! command -v docker &> /dev/null; then
     echo "Docker could not be found. Please install Docker before running this script."
     exit 1
-else
-    echo "Building Docker image..."
 fi
 
 if [ "$(docker images -q $IMAGE_NAME)" ]; then
@@ -27,8 +25,6 @@ docker build -t $IMAGE_NAME .
 if [ $? -ne 0 ]; then
     echo "Error occurred while building Docker image."
     exit 1
-else
-    echo "Docker image '$IMAGE_NAME' built successfully."
 fi
 
 docker run --name $CONTAINER_NAME --rm -v "$(pwd)/logs:/app/logs" -v "$(pwd)/build:/app/build" $IMAGE_NAME
