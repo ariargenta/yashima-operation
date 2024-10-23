@@ -64,22 +64,26 @@ RUN set -x && \
     chown -R root:root /app/logs /app/build && chmod -R 777 /app/logs /app/build && \
     ls -ld /app/logs /app/build && ls -l /app/logs /app/build
 
-# Debugging: Print ownership and permissions
+# Debugging: Print ownership and permissions for /app/logs and /app/build
 RUN echo "Printing ownership and permissions for /app/logs and /app/build" && \
     ls -ld /app/logs /app/build && ls -l /app/logs /app/build
 
-# Redirect Conan install log to a file and print it
+# Run Conan install and print output directly
 RUN set -x && \
     echo "Running conan install" && \
-    conan install . --build=missing -c tools.system.package_manager:mode=install
+    conan install . --build=missing -c tools.system.package_manager:mode=install && \
+    echo "Listing contents of /app" && \
+    ls -alh /app && \
+    echo "Listing contents of /app/build" && \
+    ls -alh /app/build
 
-# Find conan_paths.cmake
-RUN echo "Finding conan_paths.cmake" && \
-    find / -name "conan_paths.cmake"
+# Find conan_toolchain.cmake
+RUN echo "Finding conan_toolchain.cmake" && \
+    find / -name "conan_toolchain.cmake"
 
-# Print the contents of conan_paths.cmake
-RUN echo "Printing conan_paths.cmake" && \
-    cat /app/build/conan_paths.cmake || echo "conan_paths.cmake not found"
+# Print the contents of conan_toolchain.cmake
+RUN echo "Printing conan_toolchain.cmake" && \
+    cat /app/conan_toolchain.cmake || echo "conan_toolchain.cmake not found"
 
 # Test write permissions to /app/build
 RUN echo "Testing write permissions to /app/build" && \

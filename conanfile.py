@@ -12,7 +12,6 @@ class YashimaOperationConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = {"shared": False}
-    generators = "CMakeDeps", "CMakeToolchain"
     requires = [
         "glew/2.1.0",
         "spdlog/1.14.1",
@@ -20,12 +19,8 @@ class YashimaOperationConan(ConanFile):
         "gtest/1.15.0",
         "opengl/system"
     ]
+    generators = "CMakeDeps", "CMakeToolchain"
     
-    
-    def imports(self):
-        self.folders.source = "."
-        self.folders.build = "build"
-        
     def generate(self):
         tc = CMakeToolchain(self)
         tc.generate()
@@ -35,8 +30,6 @@ class YashimaOperationConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.configure()
-        print(f"Build directory: {cmake.build_folder}")
-        print(f"Binary directory: {cmake.binary_folder}")
         cmake.build()
     
     def package(self):
