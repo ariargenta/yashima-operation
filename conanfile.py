@@ -25,10 +25,6 @@ class YashimaOperationConan(ConanFile):
     def imports(self):
         self.folders.source = "."
         self.folders.build = "build"
-        
-    def generate(self):
-        deps = CMakeDeps(self)
-        deps.generate()
     
     def build(self):
         cmake = CMake(self)
