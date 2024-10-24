@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.25)
 
 project(yashima-operation VERSION 1.0.0 LANGUAGES CXX)
 
+# Platform definitions
+if(WIN32)
+    add_definitions(-DPLATFORM_WINDOWS)
+elseif(UNIX)
+    add_definitions(-DPLATFORM_UNIX)
+endif()
+
+# Initial setup
 if(NOT EXISTS "${CMAKE_SOURCE_DIR}/conan_toolchain.cmake")
     message(FATAL_ERROR "conan_toolchain.cmake not found!")
 endif()
