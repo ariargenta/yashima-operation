@@ -1,29 +1,6 @@
 #!/bin/bash
 
-# Functions
-get_keyvalue_timestamp() {
-    echo "$(date + "%Y-%m-%d_%H-%M-%S")"
-}
-
-log_event() {
-    local level="$1"
-    local event="$2"
-    local branch="$3"
-    local message="$4"
-
-    case "$level" in
-        "INFO") color="Green";;
-        "ERROR") color="Red";;
-        "WARNING") color="Yellow";;
-        *) color="White";;
-    esac
-
-    local timestamp
-
-    timestamp=$(get_keyvalue_timestamp)
-
-    echo "timestamp=$timestamp level=$level event=$event branch=$branch message='$message'"
-}
+source "./utilities/common-utilities.sh"
 
 # Variables
 start_time=$(date +%s)
