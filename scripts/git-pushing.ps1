@@ -1,6 +1,6 @@
 . "$PSScriptRoot\utilities\common-utilities.ps1"
 
-# Variables
+# Initial values
 $global:startTime = Get-Date
 $global:BRANCH_NAME = git symbolic-ref --short HEAD
 $startTime = Get-KeyValue-Timestamp

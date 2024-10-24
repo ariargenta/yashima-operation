@@ -1,8 +1,11 @@
-# Path definitions
-$BUILD_DIR = Join-Path -Path $PSScriptRoot -ChildPath "build"
-$LOGS_DIR = Join-Path -Path $PSScriptRoot -ChildPath "logs"
+. "$PSScriptRoot\utilities\common-utilities.ps1"
 
-# Clean up compilation directories
+# Variables
+$parentDir = Split-Path $PSScriptRoot -Parent
+$build_dir = Join-Path $parentDir "build"
+$logs_dir = Join-Path $parentDir "logs"
+
+# Clean up previous compilation folders
 $startTime = Get-Date
 Write-Output "Cleaning up compilation directories. [ $startTime ]"
 
