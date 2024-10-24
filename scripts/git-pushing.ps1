@@ -24,6 +24,7 @@ function Log-event {
 }
 
 # Variables
+$global:startTime = Get-Date
 $global:BRANCH_NAME = git symbolic-ref --short HEAD
 $startTime = Get-KeyValue-Timestamp
 
