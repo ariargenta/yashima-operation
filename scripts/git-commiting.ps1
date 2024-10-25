@@ -25,9 +25,7 @@ $commitMessage = Read-Host "Enter commit message"
 
 $fullCommitMessage = "${commitType}: ${commitMessage}"
 
-Write-Host "Commit message: $fullCommitMessage" -ForegroundColor Green
-
-Write-Host "Are you sure you want to push branch '$branch' with the following commit message: '$fullCommitMessage'?" -ForegroundColor Yellow
+Write-Host "Are you sure you want to push branch '$branch' with the following commit message '$fullCommitMessage'?" -ForegroundColor Yellow
 
 $confirmation = Read-Host "Enter 'Y/y' to confirm or 'N/n' to cancel"
 
