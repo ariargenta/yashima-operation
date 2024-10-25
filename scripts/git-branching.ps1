@@ -14,11 +14,14 @@ if ([string]::IsNullOrEmpty($branchExists)) {
     $remoteBranchExists = git ls-remote --heads origin $branch
 
     if ([string]::IsNullOrEmpty($remoteBranchExists)) {
-        Log-Event -level "ERROR" -event "GitBranchCheckError" -message "Branch $branch not found remotely"
+        Log-Event -level "WARNING" -event "GitBranchCheckError" -message "Branch $branch not found remotely"
 
-        Write-Host "Error: Branch $branch does not exist locally or remotely" -ForegroundColor Red
+        Write-Host "Warning: Branch $branch does not exist locally or remotely" -ForegroundColor Yellow
 
-        exit 1
+        Log-Event -event "GitBranchCreate" -message "Creating branch $branch locally from main."
+
+        git checkout -b $branch main
+
     } else {
         Log-Event -event "GitBranchCreate" -message "Branch $branch found remotely. Creating branch locally."
         
