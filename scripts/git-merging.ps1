@@ -1,11 +1,13 @@
 . "$PSScriptRoot/utilities/common-utilities.ps1"
 
 # Variables
-$sourceBranch = Read-Host "Enter the source branch:"
-$destinationBranch = Read-Host "Enter the destination branch:"
+Initialize-StartTime
 
 # Git operations
-Initialize-StartTime
+Log-Event -event "GitMergeStart" -message "Git merge begin"
+
+$sourceBranch = Read-Host "Enter the source branch:"
+$destinationBranch = Read-Host "Enter the destination branch:"
 
 Log-Event -event "GitCheckout" -message "Switching to $destinationBranch"
 
@@ -31,6 +33,6 @@ Log-Event -event "GitPush" -message "Pushing merged changes to origin/$destinati
 
 git push origin $destinationBranch
 
-Log-Event -event "GitOperationEnd" -message "Merge operation completed"
+Log-Event -event "GitMergeEnd" -message "Git merge finished"
 
 Calculate-Duration

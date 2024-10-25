@@ -56,6 +56,6 @@ if ([string]::IsNullOrEmpty($branchExists)) {
         }
     }
 
-Log-Event -event "GitOperationEnd" -message "Branch switch completed."
+Log-Event -event "GitBranchEnd" -message "Git branch "
 
 Calculate-Duration
