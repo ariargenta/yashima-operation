@@ -21,7 +21,7 @@ function Calculate-Duration {
     $endTime = Get-Date
     $duration = $endTime - $global:StartTime
 
-    Log-Event -$eventName  -message "Processing time: $($duration.TotalSeconds) seconds."
+    Log-Event -event -$eventName  -message "Processing time: $($duration.TotalSeconds) seconds."
 }
 
 function Log-Event {
