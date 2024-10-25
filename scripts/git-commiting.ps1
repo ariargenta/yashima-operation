@@ -2,7 +2,7 @@
 
 # Variables
 Initialize-StartTime
-$COMMIT_TYPES = @("build", "chore", "ci", "docs", "feat", "fix", "merge", "ops", "perf", "revert", "refactor", "style", "test")
+$COMMIT_TYPES = @("build", "chore", "ci", "docs", "feat", "fix", "ops", "perf", "revert", "refactor", "style", "test")
 
 # Git operations
 Log-Event -event "GitCommitStart" -message "Git commit begin"

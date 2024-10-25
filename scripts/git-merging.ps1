@@ -12,7 +12,7 @@ git checkout $destinationBranch
 Log-Event -event "GitPull" -message "Pulling latest changes from $destinationBranch"
 git pull origin $destinationBranch
 Log-Event "GitMerge" -message "Merging $sourceBranch into $destinationBranch"
-git merge $sourceBranch
+git merge --no-ff $sourceBranch
 
 if ($LASTEXITCODE -ne 0) {
     Log-Event -level "ERROR" -event "GitMergeError" -message "Merge conficts occurred"
