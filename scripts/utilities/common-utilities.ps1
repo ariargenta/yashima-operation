@@ -3,6 +3,11 @@ function Get-KeyValue-Timestamp {
     return ((Get-Date).ToString("yyyy-MM-dd HH:mm:ss"))
 }
 
+function Initialize-StartTime {
+    $global:StartTime = Get-Date
+
+}
+
 function Log-event {
     param (
         [string]$level = "INFO",
