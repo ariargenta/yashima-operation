@@ -1,3 +1,8 @@
+if (-not (Test-Path $PSScriptRoot)) {
+    Write-Host "Error: This script requires specific permissions to execute. Please adjust the permissions if necessary." -ForegroundColor Red
+    exit 1
+}
+
 # Functions
 function Get-KeyValue-Timestamp {
     return ((Get-Date).ToString("yyyy-MM-dd HH:mm:ss"))
