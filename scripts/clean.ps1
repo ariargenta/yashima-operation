@@ -21,4 +21,4 @@ if(Test-Path $LOGS_DIR) {
 
 $endTime = Get-Date
 
-Calculate-Duration "CleanDuration"
+Calculate-Duration

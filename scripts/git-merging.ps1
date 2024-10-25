@@ -33,4 +33,4 @@ git push origin $destinationBranch
 
 Log-Event -event "GitOperationEnd" -message "Merge operation completed"
 
-Calculate-Duration -event "GitMergeDuration"
+Calculate-Duration

@@ -36,4 +36,4 @@ if ($LASTEXITCODE -ne 0) {
 
 Log-Event -event "GitPushSuccess" -message "Operation ended"
 
-Calculate-Duration "GitPushDuration"
+Calculate-Duration
