@@ -8,6 +8,17 @@ function Initialize-StartTime {
 
 }
 
+function Calculate-Duration {
+    param (
+        [string]$eventName = "OperationDuration"
+    )
+
+    $endTime = Get-Date
+    $duration = $endTime - $global:StartTime
+
+    Log-Event -$eventName -message "Processing time: $($duration.TotalSeconds) seconds."
+}
+
 function Log-event {
     param (
         [string]$level = "INFO",

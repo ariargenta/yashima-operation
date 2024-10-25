@@ -21,6 +21,4 @@ if(Test-Path $LOGS_DIR) {
 
 $endTime = Get-Date
 
-$duration = $endTime - $startTime
-
-Write-Output "Successfully cleaned up directories in $(duration.TotalSeconds) seconds. [ $endTime ]"
+Calculate-Duration "CleanDuration"

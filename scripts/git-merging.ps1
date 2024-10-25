@@ -33,6 +33,4 @@ git push origin $destinationBranch
 
 Log-Event -event "GitOperationEnd" -message "Merge operation completed"
 
-$duration = (Get-Date) - $global:StartTime
-
-Log-Event -event "GitOperationDuration" -message "Processing time: $($duration.TotalSeconds) seconds."
+Calculate-Duration "GitMergeDuration"

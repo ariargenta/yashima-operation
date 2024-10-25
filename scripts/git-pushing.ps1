@@ -36,6 +36,4 @@ if ($LASTEXITCODE -ne 0) {
 
 Log-Event -event "GitPushSuccess" -message "Operation ended"
 
-$duration = (Get-Date) - (Get-Date $global:startTime)
-
-Log-Event -event "GitOperationDuration" -message "Processing time: $($duration.TotalSeconds) seconds."
+Calculate-Duration "GitPushDuration"
