@@ -21,7 +21,13 @@ do {
     }
 } until ($COMMIT_TYPES -contains $commitType)
 
-$commitMessage = Read-Host "Enter commit message"
+do {
+    $commitMessage = Read-Host "Enter commit message"
+
+    if ([string]::IsNullOrEmpty($commitMessage)) {
+        Write-Host "Commit message cannot be empty" -ForegroundColor Red
+    }
+} until (-not [string]::IsNullOrEmpty($commitMessage))
 
 $fullCommitMessage = "${commitType}: ${commitMessage}"
 
@@ -40,8 +46,8 @@ switch ($confirmation) {
 }
 
 if (-not $CONFIRMED) {
-    Log-Event -level "WARNING" -event "GitPushCancel" -message "User cancelled the push operation"
-    Write-Host "Push operation cancelled by user" -ForegroundColor Yellow
+    Log-Event -level "WARNING" -event "GitCommitCancel" -message "User cancelled the commit operation"
+    Write-Host "Commit operation cancelled by user" -ForegroundColor Yellow
     exit 0
 }
 
