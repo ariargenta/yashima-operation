@@ -6,6 +6,8 @@ Initialize-StartTime
 # Git operations
 Log-Event -event "GitPushStart" -message "Git push begin"
 
+$branch = git symbolic-ref --short HEAD
+
 git push origin $branch
 
 if ($LASTEXITCODE -ne 0) {
