@@ -1,7 +1,7 @@
 . "$PSScriptRoot/utilities/common-utilities.ps1"
 
 # Variables
-$brach = Read-Host "Enter the branch name you want to create and switch to:"
+$branch = Read-Host "Enter the branch name you want to create and switch to"
 
 Initialize-StartTime
 
@@ -22,7 +22,7 @@ if ([string]::IsNullOrEmpty($branchExists)) {
     } else {
         Log-Event -event "GitBranchCreate" -message "Branch $branch found remotely. Creating branch locally."
         
-        git fech origin
+        git fetch origin
 
         git checkout -b $branch origin/$branch
     }
