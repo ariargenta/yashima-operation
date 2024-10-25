@@ -5,10 +5,8 @@ Initialize-StartTime
 
 # Git operations
 Log-Event -event "GitPushStart" -message "Git push begin"
-
-$branch = git symbolic-ref --short HEAD
-
-git push origin $branch
+$currentBranch = git symbolic-ref --short HEAD
+git push origin $currentBranch
 
 if ($LASTEXITCODE -ne 0) {
     Log-Event -level "ERROR" -event "GitPushError" -message "Failed to push changes"
@@ -18,5 +16,4 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Log-Event -event "GitPushEnd" -message "Git push finished"
-
 Calculate-Duration

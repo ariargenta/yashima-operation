@@ -5,20 +5,13 @@ Initialize-StartTime
 
 # Git operations
 Log-Event -event "GitMergeStart" -message "Git merge begin"
-
 $sourceBranch = Read-Host "Enter the source branch:"
 $destinationBranch = Read-Host "Enter the destination branch:"
-
 Log-Event -event "GitCheckout" -message "Switching to $destinationBranch"
-
 git checkout $destinationBranch
-
 Log-Event -event "GitPull" -message "Pulling latest changes from $destinationBranch"
-
 git pull origin $destinationBranch
-
 Log-Event "GitMerge" -message "Merging $sourceBranch into $destinationBranch"
-
 git merge $sourceBranch
 
 if ($LASTEXITCODE -ne 0) {
@@ -30,9 +23,6 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Log-Event -event "GitPush" -message "Pushing merged changes to origin/$destinationBranch"
-
 git push origin $destinationBranch
-
 Log-Event -event "GitMergeEnd" -message "Git merge finished"
-
 Calculate-Duration

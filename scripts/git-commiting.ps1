@@ -6,11 +6,8 @@ $COMMIT_TYPES = @("build", "chore", "ci", "docs", "feat", "fix", "perf", "revert
 
 # Git operations
 Log-Event -event "GitCommitStart" -message "Git commit begin"
-
 $branch = git symbolic-ref --short HEAD
-
 $commitTypesString = $COMMIT_TYPES -join ", "
-
 Write-Host "Select the commit type: [$commitTypesString]" -ForegroundColor Yellow
 
 do {
@@ -30,9 +27,7 @@ do {
 } until (-not [string]::IsNullOrEmpty($commitMessage))
 
 $fullCommitMessage = "${commitType}: ${commitMessage}"
-
 Write-Host "Are you sure you want to push branch '$branch' with the following commit message '$fullCommitMessage'?" -ForegroundColor Yellow
-
 $confirmation = Read-Host "Enter 'Y/y' to confirm or 'N/n' to cancel"
 
 switch ($confirmation) {
@@ -52,13 +47,8 @@ if (-not $CONFIRMED) {
 }
 
 Log-Event -event "GitAdd" -message "Adding changes"
-
 git add .
-
 Log-Event -event "GitCommit" -message "Committing changes"
-
 git commit -m $fullCommitMessage
-
 Log-Event -event "GitCommitEnd" -message "Git commit finished"
-
 Calculate-Duration
