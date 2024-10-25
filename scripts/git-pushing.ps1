@@ -2,25 +2,24 @@
 
 # Variables
 Initialize-StartTime
+$COMMIT_TYPES = @("build", "chore", "ci", "docs", "feat", "fix", "perf", "revert", "refactor", "style", "test")
 
 # Git operations
 Log-Event -event "GitPushStart" -message "Git push begin"
 
 $branch = git symbolic-ref --short HEAD
 
-$commitTypes = @("feat", "fix", "docs", "style", "refactor", "perf", "test", "ci", "build", "revert", "chore")
+$commitTypesString = $COMMIT_TYPES -join ", "
 
-Write-Host "Select the commit type:" -ForegroundColor Yellow
-
-$commitTypes | ForEach-Object { Write-Host "$_" }
+Write-Host "Select the commit type: [$commitTypesString]" -ForegroundColor Yellow
 
 do {
     $commitType = Read-Host "Enter commit type"
 
-    if (-not ($commitTypes -contains $commitType)) {
+    if (-not ($COMMIT_TYPES -contains $commitType)) {
         Write-Host "Invalid commit type. Please select from the list." -ForegroundColor Red
     }
-} until ($commitTypes -contains $commitType)
+} until ($COMMIT_TYPES -contains $commitType)
 
 $commitMessage = Read-Host "Enter commit message"
 
