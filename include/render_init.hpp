@@ -12,42 +12,42 @@
  * @return void
  */
 void initializeOpenGL() {
-    logFunctionEntry( "initializeOpenGL" );
+    logFunctionEntry("initializeOpenGL");
 
-    if( !glfwInit() ) {
+    if(!glfwInit()) {
         std::cerr << "Failed to initialize GLFW." << std::endl;
         return;
     }
 
-    spdlog::info( "GLFW initialized successfully." );
+    spdlog::info("GLFW initialized successfully.");
 
     // Window configuration
-    glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
-    glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
-    glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow( DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, "Yashima Operation", nullptr, nullptr );
+    GLFWwindow* window = glfwCreateWindow(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, "Yashima Operation", nullptr, nullptr);
 
-    if( !window ) {
-        spdlog::error( "Failed to create GLFW window." );
+    if(!window) {
+        spdlog::error("Failed to create GLFW window.");
         glfwTerminate();
         return;
     }
 
-    spdlog::info( "GLFW window created successfully." );
+    spdlog::info("GLFW window created successfully.");
 
-    glfwMakeContextCurrent( window );
+    glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
 
-    if( glewInit() != GLEW_OK ) {
-        spdlog::error( "Failed to initialize GLEW." );
+    if(glewInit() != GLEW_OK) {
+        spdlog::error("Failed to initialize GLEW.");
         return;
     }
 
-    spdlog::info( "GLEW initialized successfully." );
+    spdlog::info("GLEW initialized successfully.");
 
-    logFunctionExit( "initializeOpenGL" );
+    logFunctionExit("initializeOpenGL");
 }
 
 
@@ -57,9 +57,9 @@ void initializeOpenGL() {
  * @return void
  */
 void runMainLoop() {
-    while( !glfwWindowShouldClose( glfwGetCurrentContext() ) ) {
+    while(!glfwWindowShouldClose(glfwGetCurrentContext())) {
         //Render here
-        glfwSwapBuffers( glfwGetCurrentContext() );
+        glfwSwapBuffers(glfwGetCurrentContext());
         glfwPollEvents();
     }
 
@@ -75,6 +75,6 @@ void runMainLoop() {
  * @param description A pointer to a UTF-8 encoded string describing the error.
  * @return void
  */
-void errorCallback( int error, const char* description ) {
-    spdlog::error( "GLFW error ({}): {}", error, description );
+void errorCallback(int error, const char* description) {
+    spdlog::error("GLFW error ({}): {}", error, description);
 }

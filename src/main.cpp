@@ -7,9 +7,9 @@
  * 
  * @return int Returns 0 if the program was executed successfully. Otherwise, returns -1.
  */
-int main( int argc, char* argv[] ) {
+int main(int argc, char* argv[]) {
     // Callback function to handle errors
-    glfwSetErrorCallback( errorCallback );
+    glfwSetErrorCallback(errorCallback);
 
     // Graphics initialization
     initializeOpenGL();

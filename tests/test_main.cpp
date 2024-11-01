@@ -6,7 +6,7 @@ class TestEnvironment : public ::testing::Environment {
     public:
         void SetUp() override {
             initializeLogger();
-            spdlog::info( "Test environment setup." );
+            spdlog::info("Test environment setup.");
         }
 };
 
@@ -18,8 +18,8 @@ class TestEnvironment : public ::testing::Environment {
  * @param argv 
  * @return int 
  */
-int main( int argc, char* argv[] ) {
-    ::testing::InitGoogleTest( &argc, argv );
-    ::testing::AddGlobalTestEnvironment( new ::testing::Environment() );
+int main(int argc, char* argv[]) {
+    ::testing::InitGoogleTest(&argc, argv);
+    ::testing::AddGlobalTestEnvironment(new ::testing::Environment());
     return RUN_ALL_TESTS();
 }
