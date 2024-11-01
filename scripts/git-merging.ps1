@@ -6,7 +6,7 @@ Initialize-StartTime
 # Git operations
 Log-Event -event "GitMergeStart" -message "Git merge begin"
 $sourceBranch = git symbolic-ref --short HEAD
-$destinationBranch = Read-Host "Enter the destination branch:"
+$destinationBranch = Read-Host "Enter the destination branch"
 Log-Event -event "GitCheckout" -message "Switching to $destinationBranch"
 git checkout $destinationBranch
 Log-Event -event "GitPull" -message "Pulling latest changes from $destinationBranch"
