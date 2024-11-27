@@ -17,7 +17,7 @@ if ([string]::IsNullOrEmpty($branchExists)) {
         Log-Event -event "GitBranchCreate" -message "Creating branch $branch locally from main."
         git checkout -b $branch main
         Write-Host "Branch $branch created locally. Pushing to remote..." -ForegroundColor Green
-        . "PSScriptRoot/git-pushing.ps1"
+        . "$PSScriptRoot/git-pushing.ps1"
     } else {
         Log-Event -event "GitBranchCreate" -message "Branch $branch found remotely. Creating branch locally."
         git fetch origin
@@ -32,7 +32,7 @@ if ([string]::IsNullOrEmpty($branchExists)) {
 
     if ([string]::IsNullOrEmpty($remoteBranchExists)) {
         Write-Host "Branch $branch exists locally but not remotely. Pushing the branch." -ForegroundColor Yellow
-        . "PSScriptRoot/git-pushing.ps1"
+        . "$PSScriptRoot/git-pushing.ps1"
         } else {
             Log-Event -event "GitPull" -message "Pulling latest changes from $branch."
             git pull origin $branch

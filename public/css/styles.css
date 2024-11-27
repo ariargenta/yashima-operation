@@ -1,0 +1,223 @@
+@font-face {
+    font-family: 'JuliaMono';
+    src: url('../assets/fonts/JuliaMono-ExtraBold.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JuliaMono';
+    src: url('../assets/fonts/JuliaMono-Medium.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JuliaMono';
+    src: url('../assets/fonts/JuliaMono-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('../assets/fonts/Helvetica-Bold.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('../assets/fonts/Helvetica.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body, html {
+    background-color: #000000;
+    color: #F8F8F2;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'JuliaMono', monospace;
+    font-size: 16px;
+}
+
+h1, h2, h3, p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+img.github-icon, img.linkedin-icon {
+    filter: invert(1);
+    width: 3rem;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 25%, 1fr;
+    height: 100vh;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    width: 40vw;
+    height: 100%;
+    padding-left: 3rem;
+    overflow: hidden;
+}
+
+.hero {
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.short-description {
+    font-family: 'JuliaMono', monospace;
+    font-weight: 700;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.content {
+    margin-left: 60vw;
+    padding: 1rem;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.name {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #ff0000;
+    text-shadow: 0 0 1rem #ff0000, 0 0 1.5rem #ff0000, 0 0 2rem #ff0000;
+}
+
+.name:hover {
+    filter: invert(1);
+    transition: background-color 0.25s ease;
+}
+
+.middle-name {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #00ff00;
+    text-shadow: 0 0 1rem #00ff00, 0 0 1.5rem #00ff00, 0 0 2rem #00ff00;
+}
+
+.middle-name:hover {
+    filter: invert(1);
+    transition: background-color 0.25s ease;
+}
+
+.lastname {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #0000ff;
+    text-shadow: 0 0 1rem #0000ff, 0 0 1.5rem #0000ff, 0 0 2rem #0000ff;
+}
+
+.lastname:hover {
+    filter: invert(1);
+    transition: background-color 0.25s ease;
+}
+
+.last-lastname {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #ffffff;
+    text-shadow: 0 0 1rem #ffffff, 0 0 1.5rem #ffffff, 0 0 2rem #ffffff;
+}
+
+.last-lastname:hover {
+    color: #F6F6F0;
+    text-shadow: 0 0 1rem #F6F6F0, 0 0 1.5rem #F6F6F0, 0 0 2rem #F6F6F0;
+}
+
+.specialization {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    color: #00ffff;
+    text-shadow: 0 0 1rem #00ffff, 0 0 1.5rem #00ffff, 0 0 2rem #00ffff;
+}
+
+.specialization:hover {
+    filter: invert(1);
+    transition: background-color 0.25s ease;
+}
+
+.degree {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    color: #ff00ff;
+    text-shadow: 0 0 1rem #ff00ff, 0 0 1.5rem #ff00ff, 0 0 2rem #ff00ff;
+}
+
+.degree:hover {
+    filter: invert(1);
+    transition: background-color 0.25s ease;
+}
+
+.responsability {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    color: #ffff00;
+    text-shadow: 0 0 1rem #ffff00, 0 0 1.5rem #ffff00, 0 0 2rem #ffff00;
+    transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.responsability:hover {
+    filter: invert(1);
+    transition: background-color 0.25s ease;
+}
+
+.vignette {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.vignette:hover {
+    font-family: Helvetica, sans-serif;
+    background-color: #282A36;
+    transform: scale(1.075);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.footer-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: auto;
+    padding-bottom: 3rem;
+}
+
+.about {
+    font-family: 'JuliaMono', monospace;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.about h3 {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.about p {
+    margin-bottom: 1rem;
+}
+
+.simulation-container {
+    margin-top: 2rem;
+    text-align: center;
+}

@@ -29,23 +29,23 @@ const int DEFAULT_WINDOW_HEIGHT = 600;
  */
 inline void initializeLogger() {
     // Log folder creation
-    if( !std::filesystem::exists( LOG_FOLDER ) ) {
-        std::filesystem::create_directory( LOG_FOLDER );
+    if(!std::filesystem::exists(LOG_FOLDER)) {
+        std::filesystem::create_directory(LOG_FOLDER);
     }
 
     // Logger creation
-    auto file_logger = spdlog::stdout_color_mt( "file_logger" );
+    auto file_logger = spdlog::stdout_color_mt("file_logger");
 
-    spdlog::set_default_logger( file_logger );
-    spdlog::set_level( spdlog::level::debug );
-    spdlog::flush_on( spdlog::level::info );
+    spdlog::set_default_logger(file_logger);
+    spdlog::set_level(spdlog::level::debug);
+    spdlog::flush_on(spdlog::level::info);
 }
 
 
-inline void logFunctionEntry( const std::string& function_name ) {
-    spdlog::info("Entering function: {}", function_name );
+inline void logFunctionEntry(const std::string& function_name) {
+    spdlog::info("Entering function: {}", function_name);
 }
 
-inline void logFunctionExit( const std::string& function_name ) {
-    spdlog::info("Exiting function: {}", function_name );
+inline void logFunctionExit(const std::string& function_name) {
+    spdlog::info("Exiting function: {}", function_name);
 }
